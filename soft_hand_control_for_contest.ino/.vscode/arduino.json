@@ -1,0 +1,6 @@
+{
+    "programmer": "AVRISP mkII",
+    "board": "arduino:avr:uno",
+    "port": "COM3",
+    "sketch": "soft_hand_control_for_contest.ino.ino"
+}
