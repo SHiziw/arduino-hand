@@ -57,31 +57,33 @@ void hangOn(double time){
   delay(time);
 }
 
-void releasePressure(int peroid){ /* 001排气 */
+void f001(int peroid){ /* 001排气 */
 cmd = 1111111000;
 handleCmd(cmd);
 hangOn(peroid);      
 }
 
-void halt(int peroid){       /*002关停*/
+void f002(int peroid){       /*002关停*/
 cmd = 0;
 handleCmd(cmd);
 hangOn(peroid);
 }
 
-void extend5tg(int peroid){   /*五指同时伸展11*/
+void f11(int peroid){   /*五指同时伸展11*/
+cmd = 0;
 handleCmd(cmd);
 hangOn(peroid);
 
 }
 
-void contract5tg(int peroid){  /*五指同时屈曲12*/
+void f12(int peroid){  /*五指同时屈曲12*/
+cmd = 0;
 handleCmd(cmd);
 hangOn(peroid);
 
 }
 
-void extend1ob(int peroid){     /*单指依次伸展13*/
+void f13(int peroid){     /*单指依次伸展13*/
 cmd =  0 ;      //1
 handleCmd(cmd); 
 hangOn(peroid);
@@ -97,25 +99,140 @@ hangOn(peroid);
 
 }
 
-void contract5ob(){
+void f14(int peroid){
+cmd =  0 ;      //1
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //2
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //3
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //4
+handleCmd(cmd); 
+hangOn(peroid);
 
 
 }
 
-void contractThumb(){
+void f15(int peroid){
+cmd =  0 ;      //1
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //2
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //3
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //4
+handleCmd(cmd); 
+hangOn(peroid);
 
+}
+
+void f16(int peroid){
+cmd =  0 ;      //1
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //2
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //3
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //4
+handleCmd(cmd); 
+hangOn(peroid);
+
+}
+
+void f21(int peroid){  
+cmd = 0;
+handleCmd(cmd);
+hangOn(peroid);
+
+}
+
+void f22(int peroid){  
+cmd = 0;
+handleCmd(cmd);
+hangOn(peroid);
+
+}
+void f31(int peroid){  
+cmd = 0;
+handleCmd(cmd);
+hangOn(peroid);
+
+}
+
+void f32(int peroid){
+cmd =  0 ;      //1
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //2
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //3
+handleCmd(cmd); 
+hangOn(peroid);
+cmd =  0 ;      //4
+handleCmd(cmd); 
+hangOn(peroid);
+
+}
+
+void f43(int peroid){  
+cmd = 0;
+handleCmd(cmd);
+hangOn(peroid);
+
+}
+
+void f44(int peroid){  
+cmd = 0;
+handleCmd(cmd);
+hangOn(peroid);
 
 }
 };
 
 
-class TainingOne:controlBase{
+class TrainingOne:controlBase{
 public:
 void letOn(int peroid){
-releasePressure(peroid);
-
+f001(peroid);
 }
+};
 
+class TrainingTwo:controlBase{
+public:
+void letOn(int peroid){
+f001(peroid);
+}
+};
+
+class TrainingThree:controlBase{
+public:
+void letOn(int peroid){
+f001(peroid);
+}
+};
+
+class TrainingFour:controlBase{
+public:
+void letOn(int peroid){
+f001(peroid);
+}
+};
+
+class TrainingFive:controlBase{
+public:
+void letOn(int peroid){
+f001(peroid);
+}
 };
 
 void setup()
@@ -143,9 +260,25 @@ String comdat = "11";
       delay(2);
   }
     if (comdata.length() > 0){
-      if (comdata.equals("1001\r\n")){ //训练1
-        TainingOne test1;
+      if (comdata.equals("0010\r\n")){ //训练1
+        TrainingOne test1;
         test1.letOn(1000);
+      }
+      if (comdata.equals("0020\r\n")){ //训练2
+        TrainingTwo test2;
+        test2.letOn(1000);
+      }
+      if (comdata.equals("0030\r\n")){ //训练3
+        TrainingTwo test3;
+        test3.letOn(1000);
+      }
+      if (comdata.equals("0040\r\n")){ //训练4
+        TrainingTwo test4;
+        test4.letOn(1000);
+      }
+      if (comdata.equals("0050\r\n")){ //训练5
+        TrainingTwo test5;
+        test5.letOn(1000);
       }
       comdata = "";
     }
