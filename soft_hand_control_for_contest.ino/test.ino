@@ -1,6 +1,6 @@
 const int ledCount = 10; // led总共的个数
 String comdata = "";
-long cmd;
+long cmd[20][10];
 int ledPins[] = {
     13,
     12,
@@ -27,17 +27,18 @@ void turnOn(int pin, int plc){          //turn on port pin, on status plc.
   }else digitalWrite(ledPins[pin], LOW);
 }
 
-void handleCmd(long series){   //get the command code, like 1010101010, from port 1 to 10.
-  place[9] = series / 1 % 10;
-  place[8] = series / 10 % 10;
-  place[7] = series / 100 % 10;
-  place[6] = series / 1000 % 10;
-  place[5] = series / 10000 % 10;
-  place[4] = series / 100000 % 10;
-  place[3] = series / 1000000 % 10;
-  place[2] = series / 10000000 % 10;
-  place[1] = series / 100000000 % 10;
-  place[0] = series / 1000000000 % 10;
+void handleCmd(long *series){   //get the command code, like 1010101010, from port 1 to 10.
+  place[9] = series[9];
+  place[8] = series[8];
+  place[7] = series[7];
+  place[6] = series[6];
+  place[5] = series[5];
+  place[4] = series[4];
+  place[3] = series[3];
+  place[2] = series[2];
+  place[1] = series[1];
+  place[0] = series[0];
+
   /*place[0] = series / 1 % 10;
   place[1] = series / 10 % 10;
   place[2] = series / 100 % 10;
@@ -58,45 +59,37 @@ void hangOn(double time){
 }
 
 void f001(int peroid){ /* 001排气 */
-cmd = 1111111000;
-handleCmd(cmd);
+cmd[0][10] = {1,1,1,1,1,1,1,0,0,0};
+handleCmd(cmd[1]);
 hangOn(peroid);      
 }
 
 void f002(int peroid){       /*002关停*/
-cmd = 0;
-handleCmd(cmd);
+cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
+handleCmd(cmd[1]);
 hangOn(peroid);
 }
 
 void f11(int peroid){   /*五指同时伸展11*/
-cmd = 0;
-handleCmd(cmd);
+cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
+handleCmd(cmd[1]);
 hangOn(peroid);
 
 }
 
 void f12(int peroid){  /*五指同时屈曲12*/
-cmd = 0;
-handleCmd(cmd);
+cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
+handleCmd(cmd[1]);
 hangOn(peroid);
 
 }
 
 void f13(int peroid){     /*单指依次伸展13*/
-cmd =  0 ;      //1
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //2
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //3
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //4
-handleCmd(cmd); 
-hangOn(peroid);
-
+  cmd[15][10] = {};
+  for(int i = 0;i<16;i++){  //15 in total.
+    handleCmd(cmd[i]); 
+    hangOn(peroid);
+  }
 }
 
 void f14(int peroid){
