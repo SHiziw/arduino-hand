@@ -1,6 +1,6 @@
 const int ledCount = 10; // led总共的个数
 String comdata = "";
-long cmd[20][10];
+
 int ledPins[] = {
     13,
     12,
@@ -23,8 +23,8 @@ void turnOn(int pin, int plc){          //turn on port pin, on status plc.
   if(plc == 1){
     Serial.print(pin);
     Serial.println("is HIGH");
-    digitalWrite(ledPins[pin], HIGH); 
-  }else digitalWrite(ledPins[pin], LOW);
+    digitalWrite(ledPins[pin], LOW); 
+  }else digitalWrite(ledPins[pin], HIGH);
 }
 
 void handleCmd(long *series){   //get the command code, like 1010101010, from port 1 to 10.
@@ -38,6 +38,7 @@ void handleCmd(long *series){   //get the command code, like 1010101010, from po
   place[2] = series[2];
   place[1] = series[1];
   place[0] = series[0];
+  Serial.println("cmd is working");
 
   /*place[0] = series / 1 % 10;
   place[1] = series / 10 % 10;
@@ -58,173 +59,185 @@ void hangOn(double time){
   delay(time);
 }
 
-void f001(int peroid){ /* 001排气 */
-cmd[0][10] = {1,1,1,1,1,1,1,0,0,0};
-handleCmd(cmd[1]);
-hangOn(peroid);      
+void f001(double rate){ /* 001排气 */
+long cmd1[1][10] = {1,1,1,1,1,1,1,0,0,0};
+Serial.println("f001 is ok");
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);      
 }
 
-void f002(int peroid){       /*002关停*/
-cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
-handleCmd(cmd[1]);
-hangOn(peroid);
+void f002(double rate){       /*002关停*/
+long cmd1[1][10] = {0,0,0,0,0,0,0,0,0,0};
+handleCmd(cmd1[0]);
+double peroid = 1000.0;
+hangOn(peroid*rate);
 }
 
-void f11(int peroid){   /*五指同时伸展11*/
-cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
-handleCmd(cmd[1]);
-hangOn(peroid);
-
-}
-
-void f12(int peroid){  /*五指同时屈曲12*/
-cmd[0][10] = {0,0,0,0,0,0,0,0,0,0};
-handleCmd(cmd[1]);
-hangOn(peroid);
+void f11(double rate){   /*五指同时伸展11*/
+long cmd1[1][10] = {1,1,1,1,1,0,0,0,1,1};
+handleCmd(cmd1[0]);
+double peroid = 5000.0;
+hangOn(peroid*rate);
 
 }
 
-void f13(int peroid){     /*单指依次伸展13*/
-  cmd[15][10] = {};
+void f12(double rate){  /*五指同时屈曲12*/
+long cmd1[1][10] = {1,1,1,1,1,0,0,1,0,1};
+handleCmd(cmd1[0]);
+double peroid = 5000.0;
+hangOn(peroid*rate);
+}
+
+void f13(double rate){     /*单指依次伸展13*/
+  long cmd15[15][10] = {0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0};
   for(int i = 0;i<16;i++){  //15 in total.
-    handleCmd(cmd[i]); 
-    hangOn(peroid);
+    handleCmd(cmd15[i]);
+    double peroid = 1000.0; 
+    hangOn(peroid*rate);
   }
 }
 
-void f14(int peroid){
-cmd =  0 ;      //1
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //2
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //3
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //4
-handleCmd(cmd); 
-hangOn(peroid);
-
-
+void f14(double rate){
+  long cmd15[15][10] = {0,0,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0};
+  for(int i = 0;i<16;i++){  //15 in total.
+    handleCmd(cmd15[i]); 
+    double peroid = 1000.0;
+    hangOn(peroid*rate);
+  }
 }
 
-void f15(int peroid){
-cmd =  0 ;      //1
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //2
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //3
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //4
-handleCmd(cmd); 
-hangOn(peroid);
-
+void f15(double rate){
+  long cmd15[8][10] = {0,0,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,1,1,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0};
+  for(int i = 0;i<16;i++){  //15 in total.
+    handleCmd(cmd15[i]); 
+    double peroid = 1000.0;
+    hangOn(peroid*rate);
+  }
 }
 
-void f16(int peroid){
-cmd =  0 ;      //1
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //2
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //3
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //4
-handleCmd(cmd); 
-hangOn(peroid);
-
+void f16(double rate){
+  long cmd15[8][10] = {0,0,0,0,1,0,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,0,1,1,1,0,0,1,0,1,0,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0};
+  for(int i = 0;i<16;i++){  //15 in total.
+    handleCmd(cmd15[i]); 
+    double peroid = 1000.0;
+    hangOn(peroid*rate);
+  }
 }
 
-void f21(int peroid){  
-cmd = 0;
-handleCmd(cmd);
-hangOn(peroid);
-
+void f21(double rate){  
+long cmd1[1][10] = {1,1,1,1,1,0,0,1,0,1};
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);
 }
 
-void f22(int peroid){  
-cmd = 0;
-handleCmd(cmd);
-hangOn(peroid);
-
-}
-void f31(int peroid){  
-cmd = 0;
-handleCmd(cmd);
-hangOn(peroid);
-
+void f22(double rate){  
+long cmd1[1][10] = {1,1,1,1,1,0,0,0,1,1};
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);
 }
 
-void f32(int peroid){
-cmd =  0 ;      //1
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //2
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //3
-handleCmd(cmd); 
-hangOn(peroid);
-cmd =  0 ;      //4
-handleCmd(cmd); 
-hangOn(peroid);
-
+void f31(double rate){  
+long cmd1[1][10] = {1,1,1,1,1,1,0,0,1,1};
+handleCmd(cmd1[0]);
+double peroid = 4000.0;
+hangOn(peroid*rate);
 }
 
-void f43(int peroid){  
-cmd = 0;
-handleCmd(cmd);
-hangOn(peroid);
-
+void f32(double rate){
+  long cmd15[5][10] = {0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1};
+  for(int i = 0;i<16;i++){  //15 in total.
+    handleCmd(cmd15[i]); 
+    double peroid = 1000.0;
+    hangOn(peroid*rate);
+  }
 }
 
-void f44(int peroid){  
-cmd = 0;
-handleCmd(cmd);
-hangOn(peroid);
+void f43(double rate){  
+long cmd1[1][10] = {0,0,1,1,1,0,0,0,1,1};
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);
+}
 
+void f43_2(double rate){  
+long cmd1[1][10] = {1,1,0,0,0,0,0,1,0,1};
+handleCmd(cmd1[0]);
+double peroid = 500.0;
+hangOn(peroid*rate);
 }
 };
 
 
 class TrainingOne:controlBase{
 public:
-void letOn(int peroid){
-f001(peroid);
+void letOn(double rate, int cycle){
+f001(1.0);
+f002(1.0);
+for (int c=0; c<cycle+1; c++){
+f11(rate);
+f12(rate);
+f13(rate);
+f14(rate);
+f15(rate);
+f16(rate);
+}
 }
 };
 
 class TrainingTwo:controlBase{
 public:
-void letOn(int peroid){
-f001(peroid);
+void letOn21(double rate){
+f21(rate);
+}
+void letOn22(double rate){
+f22(rate);
 }
 };
 
 class TrainingThree:controlBase{
 public:
-void letOn(int peroid){
-f001(peroid);
+void letOn(double rate){
+f31(rate);
+f32(rate);
 }
 };
 
 class TrainingFour:controlBase{
 public:
-void letOn(int peroid){
-f001(peroid);
+void letOn(double rate){
+  f001(rate);
+  f002(rate);
+}
+void letOn1041(double rate){
+  f11(rate);
+}
+void letOn1042(double rate){
+  f12(rate);
+}
+void letOn1043(double rate){
+  f43(rate);
+  f43_2(rate);
+}
+void letOn2041(double rate){
+  f11(rate);
+}
+void letOn2042(double rate){
+  f12(rate);
+}
+void letOn2043(double rate){
+  f43(rate);
+  f43_2(rate);
 }
 };
 
 class TrainingFive:controlBase{
 public:
-void letOn(int peroid){
-f001(peroid);
+void letOn(double rate){
+f001(1.0);
+f002(1.0);
 }
 };
 
@@ -241,7 +254,12 @@ void setup()
 }
 
 void loop()
-{
+{  
+TrainingOne test1;
+TrainingTwo test2;
+TrainingThree test3;
+TrainingFour test4;
+TrainingFive test5;
 String comdat = "11";
     if (comdat.equals("101")) {
       Serial.println(comdat);
@@ -254,24 +272,41 @@ String comdat = "11";
   }
     if (comdata.length() > 0){
       if (comdata.equals("0010\r\n")){ //训练1
-        TrainingOne test1;
-        test1.letOn(1000);
+      Serial.println("recieved0010");
+        test1.letOn(1.0, 3);
       }
-      if (comdata.equals("0020\r\n")){ //训练2
-        TrainingTwo test2;
-        test2.letOn(1000);
+      if (comdata.equals("0021\r\n")){ //训练2
+        test2.letOn21(1.0);
+      }
+        if (comdata.equals("0022\r\n")){ //训练2
+        test2.letOn22(1.0);
       }
       if (comdata.equals("0030\r\n")){ //训练3
-        TrainingTwo test3;
-        test3.letOn(1000);
+        test3.letOn(1.0);
       }
-      if (comdata.equals("0040\r\n")){ //训练4
-        TrainingTwo test4;
-        test4.letOn(1000);
+      if (comdata.equals("0040\r\n")){ //训练4        
+        test4.letOn(1.0);
+      }
+      if (comdata.equals("1041\r\n")){ //训练4
+        test4.letOn1041(1.0);
+      }
+      if (comdata.equals("1042\r\n")){ //训练4
+        test4.letOn1042(1.0);
+      }
+      if (comdata.equals("1043\r\n")){ //训练4
+        test4.letOn1043(1.0);
+      }      
+      if (comdata.equals("2041\r\n")){ //训练4
+        test4.letOn2041(1.0);
+      }
+      if (comdata.equals("2042\r\n")){ //训练4
+        test4.letOn2042(1.0);
+      }
+      if (comdata.equals("2043\r\n")){ //训练4
+        test4.letOn2043(1.0);
       }
       if (comdata.equals("0050\r\n")){ //训练5
-        TrainingTwo test5;
-        test5.letOn(1000);
+        test5.letOn(1.0);
       }
       comdata = "";
     }

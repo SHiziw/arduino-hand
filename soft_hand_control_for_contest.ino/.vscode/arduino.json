@@ -1,6 +1,7 @@
 {
     "programmer": "AVRISP mkII",
-    "board": "arduino:avr:uno",
+    "board": "arduino:avr:mega",
     "sketch": "test.ino",
-    "port": "COM4"
+    "port": "COM5",
+    "configuration": "cpu=atmega2560"
 }
