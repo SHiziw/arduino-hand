@@ -270,6 +270,10 @@ void setup()
   {
     pinMode(ledPins[thisLed], OUTPUT); // 循环设置，把对应的led都设置成输出
   }
+  for (int num = 0; num < ledCount; num++) // 熄灭所有led，不同的电路连接也会得到点亮所有led
+  {
+    digitalWrite(ledPins[num], HIGH);
+  }
 }
 
 void loop()
