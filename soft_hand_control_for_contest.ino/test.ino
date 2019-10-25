@@ -150,8 +150,22 @@ double peroid = 3000.0;
 hangOn(peroid*rate);
 }
 
+void f21_2(double rate){  
+long cmd1[1][10] = {0,0,0,0,0,0,0,0,0,0};
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);
+}
+
 void f22(double rate){  
 long cmd1[1][10] = {1,1,1,1,1,0,0,0,1,1};
+handleCmd(cmd1[0]);
+double peroid = 3000.0;
+hangOn(peroid*rate);
+}
+
+void f22_2(double rate){  
+long cmd1[1][10] = {0,0,0,0,0,0,0,0,0,0};
 handleCmd(cmd1[0]);
 double peroid = 3000.0;
 hangOn(peroid*rate);
@@ -209,9 +223,11 @@ class TrainingTwo:controlBase{
 public:
 void letOn21(double rate){
 f21(rate);
+f21_2(rate);
 }
 void letOn22(double rate){
 f22(rate);
+f22_2(rate);
 }
 };
 
@@ -255,6 +271,10 @@ class TrainingFive:controlBase{
 public:
 void letOn(double rate){
 stp = 0;
+f001(1.0);
+f002(1.0);
+}
+void letOff(double rate){
 f001(1.0);
 f002(1.0);
 }
@@ -337,11 +357,14 @@ TrainingFive test5;
       if (comdata.equals("2043\r\n")){ //训练4
         comdata = "";
         test4.letOn2043(1.0);
-      }      
+      }
+      if (comdata.equals("0050\r\n")){ //训练4
+        comdata = "";
+        test5.letOff(1.0);
+      }       
       comdata = "";
     }
   Serial.println("loop on");
-  delay(2);
 
 
 
