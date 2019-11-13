@@ -95,7 +95,7 @@ hangOn(peroid*rate);
 void f11(double rate){   /*五指同时伸展11*/
 long cmd1[1][10] = {1,1,1,1,1,0,0,0,1,1};
 handleCmd(cmd1[0]);
-double peroid = 5000.0;
+double peroid = 6000.0;
 hangOn(peroid*rate);
 
 }
@@ -103,7 +103,7 @@ hangOn(peroid*rate);
 void f12(double rate){  /*五指同时屈曲12*/
 long cmd1[1][10] = {1,1,1,1,1,0,0,1,0,1};
 handleCmd(cmd1[0]);
-double peroid = 5000.0;
+double peroid = 3000.0;
 hangOn(peroid*rate);
 }
 
@@ -127,7 +127,7 @@ void f14(double rate){
 
 void f15(double rate){
   long cmd15[8][10] = {0,0,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,1,1,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0};
-  for(int i = 0;i<16;i++){  //15 in total.
+  for(int i = 0;i<9;i++){  //8 in total.
     handleCmd(cmd15[i]); 
     double peroid = 1000.0;
     hangOn(peroid*rate);
@@ -136,7 +136,7 @@ void f15(double rate){
 
 void f16(double rate){
   long cmd15[8][10] = {0,0,0,0,1,0,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,0,1,1,1,0,0,1,0,1,0,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0};
-  for(int i = 0;i<16;i++){  //15 in total.
+  for(int i = 0;i<9;i++){  //8 in total.
     handleCmd(cmd15[i]); 
     double peroid = 1000.0;
     hangOn(peroid*rate);
@@ -180,7 +180,7 @@ hangOn(peroid*rate);
 
 void f32(double rate){
   long cmd15[5][10] = {0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1};
-  for(int i = 0;i<16;i++){  //15 in total.
+  for(int i = 0;i<6;i++){  //8 in total.
     handleCmd(cmd15[i]); 
     double peroid = 1000.0;
     hangOn(peroid*rate);
@@ -316,7 +316,7 @@ TrainingFive test5;
     if (comdata.length() > 0){
       if (comdata.equals("0010\r\n")){ //训练1
         comdata = "";
-        test1.letOn(1.0, 3);
+        test1.letOn(1.0, 1);
       }
       if (comdata.equals("0021\r\n")){ //训练2
         comdata = "";
